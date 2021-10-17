@@ -45,10 +45,16 @@ public class TodoUtil {
 		
 		Scanner sc = new Scanner(System.in);
 		
-		System.out.print("<항목 삭제>\n" + "삭제할 항목의 번호 : ");
-		int index = sc.nextInt();
-		if(l.deleteItem(index) > 0)
-			System.out.println("삭제되었습니다");
+		System.out.print("<항목 삭제>\n" + "삭제할 항목의 번호 (다중항목일 경우 , 사용): ");
+		String index = sc.nextLine().trim();
+		String[] n = index.split(",");
+		int[] num = new int[n.length];
+		
+		for(int i = 0; i < n.length; i++) {
+			num[i] = Integer.parseInt(n[i]);
+			if(l.deleteItem(num[i]) > 0)
+				System.out.println(num[i] + "번이 삭제되었습니다");
+		}
 		
 		/*for (TodoItem item : l.getList()) {
 			if (num-1 == l.indexOf(item)) {
@@ -186,10 +192,15 @@ public class TodoUtil {
 	
 	
 	
-	public static void completeItem(TodoList l, int index) {
-		if(l.completeItem(index) > 0)
-				System.out.println("완료 체크하였습니다");
+	public static void completeItem(TodoList l, String index) {
+		String[] n = index.split(",");
+		int[] num = new int[n.length];
 		
+		for(int i = 0; i < n.length; i++) {
+			num[i] = Integer.parseInt(n[i]);
+			if(l.completeItem(num[i]) > 0)
+				System.out.println(num[i] + "번을 완료 체크했습니다 ");
+		}
 	}
 	
 	

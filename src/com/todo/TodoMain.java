@@ -75,7 +75,7 @@ public class TodoMain {
 				break;
 				
 			case "comp":
-				int index = sc.nextInt();
+				String index = sc.nextLine().trim();
 				TodoUtil.completeItem(l, index);
 				break;
 				
