@@ -60,7 +60,7 @@ public class TodoList {
 
 	public int addItem(TodoItem t) {
 		String sql = "insert into list (title, memo, category, current_date, due_date)" 
-				+ " values (?,?,?,?,?);";
+				+ " values (?,?,?,?,?,?);";
 		PreparedStatement pstmt;
 		int count = 0;
 		try {
@@ -98,7 +98,7 @@ public class TodoList {
 	
 
 	public int updateItem(TodoItem t) {
-		String sql  = "update list set title=?, memo=?, category=?, current_date=?, due_date=?, is_completed=?, priority=?"
+		String sql  = "update list set title=?, memo=?, category=?, current_date=?, due_date=?, is_completed=?, priority=?, ongoing=?"
 				+ "where id = ?;";
 		PreparedStatement pstmt;
 		int count = 0;
@@ -111,7 +111,8 @@ public class TodoList {
 			pstmt.setString(5, t.getDue_date());
 			pstmt.setInt(6, 0);
 			pstmt.setInt(7, 0);
-			pstmt.setInt(8, t.getId());
+			pstmt.setInt(8, 0);
+			pstmt.setInt(9, t.getId());
 			count = pstmt.executeUpdate();
 			pstmt.close();
 		}catch (SQLException e) {
@@ -369,11 +370,12 @@ public class TodoList {
 		String tit = getTitle(index) + "[V]";
 		int count = 0;
 		try {
-			String sql  = "update list set is_completed=1, title=?"
+			String sql  = "update list set is_completed=1, title=?, ongoing=?"
 					+ "where id = ?;";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, tit);
-			pstmt.setInt(2, index);
+			pstmt.setInt(2, 0);
+			pstmt.setInt(3, index);
 			count = pstmt.executeUpdate();
 			pstmt.close();
 		}catch (SQLException e) {
@@ -381,6 +383,28 @@ public class TodoList {
 		}
 		return count;
 	}
+	
+	
+	
+	public int ongoingItem(int n) {
+		PreparedStatement pstmt;
+		String tit = "[Ongoing] " + getTitle(n);
+		int count = 0;
+		try {
+			String sql  = "update list set ongoing=1, is_completed=0, title=?"
+					+ "where id = ?;";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, tit);
+			pstmt.setInt(2, n);
+			count = pstmt.executeUpdate();
+			pstmt.close();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+	
+	
 	
 	public int setPriority(int num, int priority) {
 		PreparedStatement pstmt;
@@ -399,6 +423,7 @@ public class TodoList {
 	}
 	
 	
+	
 	public String getTitle(int index) {
 		String title = null;
 		PreparedStatement pstmt;
@@ -413,6 +438,10 @@ public class TodoList {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		title = title.trim();
+		title = title.replace("[Ongoing]", "");
+		title = title.replace("[V]", "");
+		title = title.trim();
 		return title;
 	}
 	

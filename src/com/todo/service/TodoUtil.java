@@ -177,6 +177,11 @@ public class TodoUtil {
 		
 	}
 	
+	public static void ongoingItem(TodoList l, int n) {
+		if(l.ongoingItem(n) > 0)
+			System.out.println("진행 목록으로 체크하였습니다");
+	}
+	
 	public static void setPriority(TodoList l, int num) {
 		Scanner sc = new Scanner(System.in);
 		System.out.print("우선순위(1, 2, 3) (default : 0) : ");
@@ -185,6 +190,8 @@ public class TodoUtil {
 			System.out.println("우선순위가 설정되었습니다");
 			
 	}
+	
+	
 	
 	
 	/* 

@@ -98,6 +98,12 @@ public class TodoMain {
 				TodoUtil.priorityList(l, "priority", 0);
 				break;
 				
+			case "ongoing":
+				int n = sc.nextInt();
+				TodoUtil.ongoingItem(l, n);
+				break;
+				
+				
 			case "help":
 				Menu.displaymenu();
 				break;

@@ -13,6 +13,7 @@ public class TodoItem {
     private Date date;
     private int is_completed;
     private int priority;
+    private int ongoing;
     
 
     public TodoItem(String title, String desc, String category, String due_date){
@@ -24,6 +25,7 @@ public class TodoItem {
         this.id  = 0;
         this.is_completed = 0;
         this.priority = 0;
+        this.ongoing = 0;
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd kk:mm:ss");
     	current_date = format.format(date);
     }
@@ -103,6 +105,16 @@ public class TodoItem {
 
 	public void setPriority(int priority) {
 		this.priority = priority;
+	}
+
+
+	public int getOngoing() {
+		return ongoing;
+	}
+
+
+	public void setOngoing(int ongoing) {
+		this.ongoing = ongoing;
 	}
 
 
