@@ -419,7 +419,7 @@ public class TodoList {
 	
 	public int ongoingItem(int n) {
 		PreparedStatement pstmt;
-		String tit = "[Ongoing] " + getTitle(n);
+		String tit =  getTitle(n) + " [Ongoing]";
 		int count = 0;
 		try {
 			String sql  = "update list set ongoing=1, is_completed=0, title=?"
