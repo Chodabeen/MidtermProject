@@ -16,7 +16,9 @@ public class Menu {
         System.out.println("find <검색어> - 항목 검색");
         System.out.println("find_cate <검색어> - 항목 검색");
         System.out.println("ls_cate - 카테고리 목록");
+        System.out.println("comp <번호> - 완료된 목록 체크");
         System.out.println("ls_comp - 완료된 목록 ");
+        System.out.println("help - menu 나열");
         System.out.println("exit - 종료");
     }
     
