@@ -98,7 +98,7 @@ public class TodoList {
 	
 
 	public int updateItem(TodoItem t) {
-		String sql  = "update list set title=?, memo=?, category=?, current_date=?, due_date=?"
+		String sql  = "update list set title=?, memo=?, category=?, current_date=?, due_date=?, is_completed=?, priority=?"
 				+ "where id = ?;";
 		PreparedStatement pstmt;
 		int count = 0;
@@ -109,7 +109,9 @@ public class TodoList {
 			pstmt.setString(3, t.getCategory());
 			pstmt.setString(4, t.getCurrent_date());
 			pstmt.setString(5, t.getDue_date());
-			pstmt.setInt(6, t.getId());
+			pstmt.setInt(6, 0);
+			pstmt.setInt(7, 0);
+			pstmt.setInt(8, t.getId());
 			count = pstmt.executeUpdate();
 			pstmt.close();
 		}catch (SQLException e) {
@@ -134,8 +136,10 @@ public class TodoList {
 				String description = rs.getString("memo");
 				String due_date = rs.getString("due_date");
 				String current_date = rs.getString("current_date");
+				int priority = rs.getInt("priority");
 				TodoItem t = new TodoItem(title, description, category, due_date);
 				t.setId(id);
+				t.setPriority(priority);
 				t.setCurrent_date(current_date);
 				list.add(t);
 			}
@@ -165,8 +169,10 @@ public class TodoList {
 				String description = rs.getString("memo");
 				String due_date = rs.getString("due_date");
 				String current_date = rs.getString("current_date");
+				int priority = rs.getInt("priority");
 				TodoItem t = new TodoItem(title, description, category, due_date);
 				t.setId(id);
+				t.setPriority(priority);
 				t.setCurrent_date(current_date);
 				list.add(t);
 		}
@@ -194,8 +200,10 @@ public class TodoList {
 				String description = rs.getString("memo");
 				String due_date = rs.getString("due_date");
 				String current_date = rs.getString("current_date");
+				int priority = rs.getInt("priority");
 				TodoItem t = new TodoItem(title, description, category, due_date);
 				t.setId(id);
+				t.setPriority(priority);
 				t.setCurrent_date(current_date);
 				list.add(t);
 		}
@@ -261,8 +269,10 @@ public class TodoList {
 				String description = rs.getString("memo");
 				String due_date = rs.getString("due_date");
 				String current_date = rs.getString("current_date");
+				int priority = rs.getInt("priority");
 				TodoItem t = new TodoItem(title, description, category, due_date);
 				t.setId(id);
+				t.setPriority(priority);
 				t.setCurrent_date(current_date);
 				list.add(t);
 			}
@@ -291,8 +301,10 @@ public class TodoList {
 				String description = rs.getString("memo");
 				String due_date = rs.getString("due_date");
 				String current_date = rs.getString("current_date");
+				int priority = rs.getInt("priority");
 				TodoItem t = new TodoItem(title, description, category, due_date);
 				t.setId(id);
+				t.setPriority(priority);
 				t.setCurrent_date(current_date);
 				list.add(t);
 			}
@@ -300,6 +312,53 @@ public class TodoList {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return list;
+	}
+	
+	public ArrayList<TodoItem> getPriorityList(String orderby, int ordering){
+		ArrayList<TodoItem> list = new ArrayList<TodoItem>();
+		Statement stmt;
+		try {
+			stmt = conn.createStatement();
+			String sql = "SELECT * FROM list ORDER BY " + orderby ;
+			if(ordering == 0)
+				sql += " desc";
+			ResultSet rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				int id = rs.getInt("id");
+				String category = rs.getString("category");
+				String title = rs.getString("title");
+				String description = rs.getString("memo");
+				String due_date = rs.getString("due_date");
+				String current_date = rs.getString("current_date");
+				int priority = rs.getInt("priority");
+				TodoItem t = new TodoItem(title, description, category, due_date);
+				t.setId(id);
+				t.setPriority(priority);
+				t.setCurrent_date(current_date);
+				list.add(t);
+			}
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	
+	
+	public ArrayList<TodoItem> deleteZere(ArrayList<TodoItem> l){
+		ArrayList<TodoItem> list = new ArrayList<TodoItem>();
+		ArrayList<TodoItem> zero = new ArrayList<TodoItem>();
+		for(TodoItem item : l) {
+			if(item.getPriority() != 0)
+				list.add(item);
+			else
+				zero.add(item);
+		}
+		
+		for(TodoItem t : zero)
+			list.add(t);
 		return list;
 	}
 	
@@ -323,6 +382,21 @@ public class TodoList {
 		return count;
 	}
 	
+	public int setPriority(int num, int priority) {
+		PreparedStatement pstmt;
+		int count = 0;
+		try {
+			String sql = "update list set priority =?" + "where id = ?;";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, priority);
+			pstmt.setInt(2, num);
+			count = pstmt.executeUpdate();
+			pstmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
 	
 	
 	public String getTitle(int index) {

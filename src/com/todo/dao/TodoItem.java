@@ -12,6 +12,7 @@ public class TodoItem {
     private String due_date;
     private Date date;
     private int is_completed;
+    private int priority;
     
 
     public TodoItem(String title, String desc, String category, String due_date){
@@ -22,6 +23,7 @@ public class TodoItem {
         this.date=new Date();
         this.id  = 0;
         this.is_completed = 0;
+        this.priority = 0;
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd kk:mm:ss");
     	current_date = format.format(date);
     }
@@ -94,9 +96,20 @@ public class TodoItem {
 	}
 
 
+	public int getPriority() {
+		return priority;
+	}
+
+
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
+
+
 	@Override
 	public String toString() {
-		return id + " [" + category + "] " + title + " - " + desc + " - [" + due_date + "] - "  + current_date + "\n";
+		return id + " [" + category + "] " + title + " - " + desc + " - [마감날짜 : " + due_date + "] - "  
+				+ current_date + " - (우선순위 : " +  priority + ") " + "\n";
 	}
 
 

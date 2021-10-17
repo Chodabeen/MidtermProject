@@ -83,6 +83,21 @@ public class TodoMain {
 				TodoUtil.listAll(l, 1);
 				break;
 				
+			case "set_priority":
+				int num = sc.nextInt();
+				TodoUtil.setPriority(l, num);
+				break;
+				
+			case "ls_priority":
+				System.out.println("우선순위로 정렬했습니다");
+				TodoUtil.priorityList(l, "priority", 1);
+				break;
+						
+			case "ls_priority_desc":
+				System.out.println("우선순위 역순으로 정렬했습니다");
+				TodoUtil.priorityList(l, "priority", 0);
+				break;
+				
 			case "help":
 				Menu.displaymenu();
 				break;
