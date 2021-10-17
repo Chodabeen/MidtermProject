@@ -165,11 +165,26 @@ public class TodoUtil {
 		}
 	}
 	
+	
+	
+	public static void onListAll(TodoList l, int on) {
+		int count = 0;
+		for (TodoItem item : l.getOnList(on)) {
+			System.out.print(item.toString());
+			count++;
+		}
+		System.out.printf("총 %d개의 목록이 완료되었습니다\n", count);
+	}
+	
+	
+	
 	public static void priorityList(TodoList l, String orderby, int ordering) {
 		for (TodoItem item : l.deleteZere(l.getPriorityList(orderby, ordering))) {
 			System.out.print(item.toString());
 		}
 	}
+	
+	
 	
 	public static void completeItem(TodoList l, int index) {
 		if(l.completeItem(index) > 0)
@@ -177,19 +192,23 @@ public class TodoUtil {
 		
 	}
 	
+	
+	
 	public static void ongoingItem(TodoList l, int n) {
 		if(l.ongoingItem(n) > 0)
 			System.out.println("진행 목록으로 체크하였습니다");
 	}
+	
+	
 	
 	public static void setPriority(TodoList l, int num) {
 		Scanner sc = new Scanner(System.in);
 		System.out.print("우선순위(1, 2, 3) (default : 0) : ");
 		int priority = sc.nextInt();
 		if(l.setPriority(num, priority) > 0)
-			System.out.println("우선순위가 설정되었습니다");
-			
+			System.out.println("우선순위가 설정되었습니다");		
 	}
+	
 	
 	
 	

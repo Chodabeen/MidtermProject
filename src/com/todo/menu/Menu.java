@@ -22,6 +22,7 @@ public class Menu {
         System.out.println("ls_priority - 우선순위 순서대로 나열");
         System.out.println("ls_prioriy_desc - 우선순위 역순으로 나열");
         System.out.println("ongoing <번호> - 진행중인 목록 체크 ");
+        System.out.println("ls_ongoing - 진행중인 목록 나열 ");
         System.out.println("help - menu 나열");
         System.out.println("exit - 종료");
     }

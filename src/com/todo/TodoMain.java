@@ -103,6 +103,10 @@ public class TodoMain {
 				TodoUtil.ongoingItem(l, n);
 				break;
 				
+			case "ls_ongoing":
+				TodoUtil.onListAll(l, 1);
+				break;
+				
 				
 			case "help":
 				Menu.displaymenu();

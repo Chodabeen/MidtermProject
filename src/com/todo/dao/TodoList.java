@@ -217,6 +217,37 @@ public class TodoList {
 	
 	
 	
+	public ArrayList<TodoItem> getOnList(int on){
+		ArrayList<TodoItem> list = new ArrayList<TodoItem>();
+		PreparedStatement pstmt;
+		try{
+			String sql = "SELECT * FROM list WHERE ongoing = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, 1);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				int id = rs.getInt("id");
+				String category = rs.getString("category");
+				String title = rs.getString("title");
+				String description = rs.getString("memo");
+				String due_date = rs.getString("due_date");
+				String current_date = rs.getString("current_date");
+				int priority = rs.getInt("priority");
+				TodoItem t = new TodoItem(title, description, category, due_date);
+				t.setId(id);
+				t.setPriority(priority);
+				t.setCurrent_date(current_date);
+				list.add(t);
+		}
+		pstmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	
+	
 	public int getCount() {
 		Statement stmt;
 		int count = 0;
